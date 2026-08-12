@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Vinícius Santos — Criação de Sites Profissionais</title>
+
+<link rel="stylesheet" href="reset.css">
+
 <meta name="description" content="Sites profissionais, acessíveis e prontos para vender. Planos mensais e anuais, pagamento via PIX ou cartão.">
 
 <!-- QRCode generator (client-side, no data leaves the browser) -->
@@ -81,13 +84,20 @@ html{scroll-behavior:smooth; font-size:110%;}
 body{
   margin:0;
   font-family:var(--font-body);
+  background:var(--bg-grad); /* cor sólida de segurança, caso a camada de fundo abaixo falhe */
+  color:var(--text);
+  min-height:100vh;
+  transition:color .4s ease;
+  overflow-x:hidden;
+}
+/* Camada de fundo animado, do tamanho exato da tela (não da altura da página toda).
+   Isso evita o fundo ficar "esticado e cortado" em telas com muito conteúdo. */
+#bgLayer{
+  position:fixed; inset:0; z-index:-1;
   background:var(--bg-grad);
   background-size:200% 200%;
   animation: gradientShift 18s ease infinite;
-  color:var(--text);
-  min-height:100vh;
-  transition:background .5s ease, color .4s ease;
-  overflow-x:hidden;
+  transition:background .5s ease;
 }
 @keyframes gradientShift{
   0%{ background-position:0% 50%; }
@@ -95,7 +105,7 @@ body{
   100%{ background-position:0% 50%; }
 }
 @media (prefers-reduced-motion: reduce){
-  body{ animation:none; }
+  #bgLayer{ animation:none; }
 }
 h1,h2,h3,h4{font-family:var(--font-display); margin:0 0 .4em 0; line-height:1.1;}
 p{line-height:1.6;}
@@ -518,6 +528,8 @@ body.pre-reveal .pre-reveal-hide{
 </style>
 </head>
 <body>
+
+<div id="bgLayer" aria-hidden="true"></div>
 
 <div id="pageLoader" aria-hidden="true">
   <div class="skeleton-box">
